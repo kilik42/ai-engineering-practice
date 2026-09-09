@@ -171,13 +171,33 @@ print("-" * 50)
 #
 # Instead, use an open-source Hugging Face model locally.
 # FLAN-T5 is small enough for a learning/demo RAG pipeline.
-generator = pipeline(
-    task="text2text-generation",
-    model="google/flan-t5-small",
-    max_new_tokens=256,
-)
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-llm = HuggingFacePipeline(pipeline=generator)
+model_name = "google/flan-t5-small"
+
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+
+
+def generate_answer(prompt_text):
+    inputs = tokenizer(
+        prompt_text,
+        return_tensors="pt",
+        truncation=True,
+        max_length=1024
+    )
+
+    outputs = model.generate(
+        **inputs,
+        max_new_tokens=256,
+        do_sample=False
+    )
+
+    return tokenizer.decode(
+        outputs[0],
+        skip_special_tokens=True
+    )
 
 retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
 
@@ -225,11 +245,11 @@ def ask_rag(question: str) -> dict:
     )
 
     # 3. GENERATE WITH LOCAL OPEN-SOURCE MODEL
-    response = llm.invoke(messages)
+    response = generate_answer(messages)
 
     return {
         "question": question,
-        "answer": response.content,
+        "answer": response,
         "source_documents": source_documents,
     }
 
