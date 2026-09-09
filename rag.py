@@ -10,6 +10,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_anthropic import ChatAnthropic
 from langchain.chains import RetrievalQA
+from langchain.chat_models import HuggingFaceHub
 from dotenv import load_dotenv
 import os
 
@@ -138,4 +139,28 @@ print("RAG pipeline setup is in progress...") # Print a message indicating the s
 print("using anthropic model with the provided api key")
 
 print("RAG pipeline is now ready to handle queries.") # Print a message indicating the RAG pipeline is ready
+
+
+# paid model setup for Anthropic's Claude model
+llm = ChatAnthropic(
+    model = "claude-3-5-sonnet-2024060",
+    temperature=0.7,
+    api_key="your_anthropic_api_key") # Replace with your actual API key for the Anthropic model
+
+
+# this is an example of setting up the RAG pipeline with the open ai model
+# OpenAI:
+# if "OPENAI_API_KEY" in os.environ:
+#     llm = OpenAI(
+#         model_name="gpt-4",
+#         temperature=0.5
+#     )
+#
+
+# HuggingFace:
+# if "HUGGINGFACEHUB_API_TOKEN" in os.environ:
+llm = HuggingFaceHub(
+        repo_id="google/flan-t5-small", # The HuggingFace model repository ID for the Flan-T5 small model
+        model_kwargs={"temperature": 0.5, "max_length": 512} # The model parameters for the HuggingFace model
+    )
 
