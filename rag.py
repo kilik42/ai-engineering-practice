@@ -185,8 +185,14 @@ example_queries = [
     "How is NLP used in real-world applications?"
 ]
 
+# iterate over the example queries and ask the RAG pipeline for answers
 for query in example_queries:
-    print(f"Query: {query}")
-    response = rag_pipeline.run(query)
-    print(f"Response: {response}")
+    print("\nQuestion:", query)
+    try: # Attempt to invoke the RAG pipeline with the current query
+        response = rag_pipeline.invoke(query)# we use invoke instead of run for the RAG pipeline because it is the recommended method for invoking the pipeline. Run is deprecated.
+    except Exception as e: # Handle any exceptions that occur during the invocation of the RAG pipeline
+        response = f"An error occurred: {str(e)}"
+    print(f"Query: {query}") # Print the current query being asked to the RAG pipeline
+    print(f"Response: {response}") # Print the response returned by the RAG pipeline
     print("-" * 50)
+
