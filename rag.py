@@ -164,3 +164,29 @@ llm = HuggingFaceHub(
         model_kwargs={"temperature": 0.5, "max_length": 512} # The model parameters for the HuggingFace model
     )
 
+
+
+# create the RAG pipeline using the selected LLM and the vectorstore
+rag_pipeline = RetrievalQA(
+    llm=llm,
+    chain_type="stuff", # Specify the type of chain to use in the RAG pipeline
+    retriever=vectorstore.as_retriever(), # Use the vectorstore as the retriever for the RAG pipeline
+    return_source_documents=True # Indicate whether to return the source documents along with the retrieved answers
+)
+
+
+# example questions to ask the RAG pipeline
+example_queries = [
+    "What is reinforcement learning?",
+    "Explain the concept of transfer learning.",
+    "How does supervised learning differ from unsupervised learning?",
+    "What is reinforcement learning and how does it work?",
+    "What are the main applications of computer vision?",
+    "How is NLP used in real-world applications?"
+]
+
+for query in example_queries:
+    print(f"Query: {query}")
+    response = rag_pipeline.run(query)
+    print(f"Response: {response}")
+    print("-" * 50)
