@@ -1,6 +1,7 @@
 # Ignore environment files
 .env
 *.env
+.venv
 
 # Ignore secrets files or folders
 secrets
@@ -8,3 +9,4 @@ secrets/
 
 # Ignore pdf folder
 pdf/
+source .venv/Scripts/activate

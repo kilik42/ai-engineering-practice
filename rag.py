@@ -5,7 +5,7 @@
 # pip install sentence-transformers
 # pip install chromadb
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_anthropic import ChatAnthropic
@@ -195,4 +195,7 @@ for query in example_queries:
     print(f"Query: {query}") # Print the current query being asked to the RAG pipeline
     print(f"Response: {response}") # Print the response returned by the RAG pipeline
     print("-" * 50)
+
+
+
 
