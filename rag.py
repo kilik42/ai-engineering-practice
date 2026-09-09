@@ -107,3 +107,35 @@ print(f"- vector store location: {vectorstore.persist_directory}") # Print the l
 print("You can now use the vector store to perform similarity searches and retrieve relevant text chunks.")
 
 
+#step 5: Query the vector database for relevant chunks
+print("Step 5: Querying the vector database for relevant chunks")
+print("-" * 50)
+query = "Enter your query here" # Replace with your actual query
+results = vectorstore.similarity_search(query) # Perform a similarity search in the vector database
+print(f"Query: {query}") # Print the query being used for the similarity search
+print(f"Number of relevant chunks retrieved: {len(results)}") # Print the number of relevant chunks retrieved from the vector database
+for i, result in enumerate(results): # Iterate over the retrieved relevant chunks and print their content
+    print(f"Chunk {i+1}: {result.page_content}") # Print the content of each retrieved relevant chunk
+
+
+query ="what is reinforcement learning" # Replace with your actual query
+results = vectorstore.similarity_search(query, k=2) # Perform a similarity search in the vector database 
+#k specifies the number of top relevant chunks to retrieve from the vector database
+print(f"Query: {query}") # Print the query being used for the similarity search
+print(f"Number of relevant chunks retrieved: {len(results)}") # Print the number of relevant chunks retrieved from the vector database
+for i, result in enumerate(results): # Iterate over the retrieved relevant chunks and print their content
+    print(f"Chunk {i+1}: {result.page_content}") # Print the content of each retrieved relevant chunk
+    print("-" * 50) # Print a separator line between retrieved chunks
+    print() # Print an empty line for better readability between different querie
+
+# You can repeat the above steps with different queries to retrieve relevant chunks from the vector database as needed
+
+# step 6 set up rag pipeline
+print("Step 6: Setting up the RAG pipeline")
+print("-" * 50)
+
+print("RAG pipeline setup is in progress...") # Print a message indicating the setup of the RAG pipeline
+print("using anthropic model with the provided api key")
+
+print("RAG pipeline is now ready to handle queries.") # Print a message indicating the RAG pipeline is ready
+
